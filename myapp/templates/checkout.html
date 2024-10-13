@@ -1,0 +1,31 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load humanize %} 
+{% block title %} ชำระเงิน {% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold text-center mb-6">ชำระเงิน</h1>
+    
+    <!-- ฟอร์มสำหรับเลือกที่อยู่ -->
+    <form method="POST" action="{% url 'checkout' %}" class="space-y-4">
+        {% csrf_token %}
+        <h2 class="text-lg font-semibold">เลือกที่อยู่:</h2>
+        <select name="address_id" class="border p-2 w-full">
+            <option value="" disabled selected>-- เลือกที่อยู่ --</option>
+            {% for address in addresses %}
+                <option value="{{ address.id }}">{{ address.address_line1 }}, {{ address.city }}, {{ address.state }}</option>
+            {% endfor %}
+        </select>
+
+        <h2 class="text-lg font-semibold mt-6">หรือกรอกที่อยู่ใหม่:</h2>
+        <input type="text" name="address_line1" placeholder="ที่อยู่ 1" class="border p-2 w-full">
+        <input type="text" name="address_line2" placeholder="ที่อยู่ 2" class="border p-2 w-full">
+        <input type="text" name="city" placeholder="เมือง" class="border p-2 w-full">
+        <input type="text" name="state" placeholder="รัฐ/จังหวัด" class="border p-2 w-full">
+        <input type="text" name="postal_code" placeholder="รหัสไปรษณีย์" class="border p-2 w-full">
+        <input type="text" name="phone_number" placeholder="หมายเลขโทรศัพท์" class="border p-2 w-full">
+        <button type="submit" class="bg-yellow-600 text-white px-4 py-2 rounded">ชำระเงิน</button>
+    </form>
+</div>
+{% endblock %}

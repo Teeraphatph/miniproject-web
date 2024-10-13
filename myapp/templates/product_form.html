@@ -1,0 +1,58 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %} เพิ่ม/แก้ไขสินค้า {% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-lg bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
+            {% if form.instance.id %}แก้ไข{% else %}เพิ่ม{% endif %} สินค้า
+        </h2>
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-700">{{ form.name.label }}</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.name.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="description" class="block text-sm font-medium text-gray-700">{{ form.description.label }}</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.description.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="price" class="block text-sm font-medium text-gray-700">{{ form.price.label }}</label>
+                {{ form.price }}
+                {% if form.price.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.price.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="stock_quantity" class="block text-sm font-medium text-gray-700">{{ form.stock_quantity.label }}</label>
+                {{ form.stock_quantity }}
+                {% if form.stock_quantity.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.stock_quantity.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="image" class="block text-sm font-medium text-gray-700">{{ form.image.label }}</label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.image.errors }}</p>
+                {% endif %}
+            </div>
+            <button 
+                type="submit" 
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                บันทึก
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

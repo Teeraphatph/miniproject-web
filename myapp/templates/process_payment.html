@@ -1,0 +1,34 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load humanize %} 
+{% block title %} Process Payment {% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10 p-5 bg-white rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-6 text-center">Processing Payment</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+
+        
+        <!-- ฟิลด์สำหรับข้อมูลการชำระเงิน -->
+        <div class="mt-6">
+            <label for="cardNumber" class="block text-sm font-medium text-gray-700">หมายเลขบัตรเครดิต</label>
+            <input type="text" id="cardNumber" name="cardNumber" required class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="1234 5678 9012 3456">
+        </div>
+
+        <div class="mt-6">
+            <label for="expiryDate" class="block text-sm font-medium text-gray-700">วันหมดอายุ</label>
+            <input type="text" id="expiryDate" name="expiryDate" required class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="MM/YY">
+        </div>
+
+        <div class="mt-6">
+            <label for="cvc" class="block text-sm font-medium text-gray-700">CVC</label>
+            <input type="text" id="cvc" name="cvc" required class="mt-1 p-2 border border-gray-300 rounded-md w-full" placeholder="123">
+        </div>
+
+        <button type="submit" class="mt-6 w-full py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-500">Confirm Payment</button>
+    </form>
+</div>
+{% endblock %}

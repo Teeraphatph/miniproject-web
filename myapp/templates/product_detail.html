@@ -1,0 +1,61 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load humanize %} 
+{% block title %} รายละเอียดสินค้า {% endblock %}
+
+{% block content %}
+<div class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-wrap -mx-4">
+            <!-- Product Images -->
+            <div class="w-full md:w-1/2 px-10 mb-8">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                     class="w-full h-auto rounded-lg shadow-md mb-4" id="mainImage">
+                <div class="flex gap-4 py-4 justify-center overflow-x-auto">
+                    {% for image in product.images.all %}
+                    <img src="{{ image.image.url }}" alt="Thumbnail {{ forloop.counter }}"
+                         class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
+                         onclick="changeImage(this.src)">
+                    {% endfor %}
+                </div>
+                
+                <!-- Check if the user is a superuser to show the upload image button -->
+                
+            </div>
+  
+            <!-- Product Details -->
+            <div class="w-full md:w-1/2 px-4">
+                <h2 class="text-3xl font-bold mb-2">{{ product.name }}</h2>
+                <div class="mb-4">
+                    <span class="text-2xl font-bold mr-2">฿{{ product.price|intcomma }}</span>
+                    {% if product.discount_price %}
+                    <span class="text-gray-500 line-through">฿{{ product.discount_price }}</span>
+                    {% endif %}
+                </div>
+
+                <p class="text-gray-700 mb-6">{{ product.description }}</p>
+
+                <div class="flex space-x-4 mb-6">
+                  <button data-product="{{product.id}}" data-action="add" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full mt-4 add-btn update-cart">Add to Cart</button>
+                  {% if user.is_superuser %}
+                <div class="mt-6">
+                    <a href="{% url 'upload_product_image' product.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full mt-4 ">
+                        เพิ่มรูปภาพ
+                    </a>
+                </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <script>
+        function changeImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+    </script>
+</div>
+
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+  
+{% endblock %}

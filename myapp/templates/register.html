@@ -1,0 +1,111 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %} สมัครสมาชิก {% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center ">
+    <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">สมัครสมาชิก</h2>
+
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-700">{{ form.username.label }}</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    value="{{ form.username.value|default:'' }}" 
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                    required 
+                    placeholder="ชื่อผู้ใช้">
+                {% if form.username.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.username.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="first_name" class="block text-sm font-medium text-gray-700">{{ form.first_name.label }}</label>
+                <input 
+                    type="text" 
+                    id="first_name" 
+                    name="first_name" 
+                    value="{{ form.first_name.value|default:'' }}" 
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                    required 
+                    placeholder="ชื่อ">
+                {% if form.first_name.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.first_name.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="last_name" class="block text-sm font-medium text-gray-700">{{ form.last_name.label }}</label>
+                <input 
+                    type="text" 
+                    id="last_name" 
+                    name="last_name" 
+                    value="{{ form.last_name.value|default:'' }}" 
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                    required 
+                    placeholder="นามสกุล">
+                {% if form.last_name.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.last_name.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700">{{ form.email.label }}</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    value="{{ form.email.value|default:'' }}" 
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                    required 
+                    placeholder="อีเมล">
+                {% if form.email.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.email.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="password1" class="block text-sm font-medium text-gray-700">{{ form.password1.label }}</label>
+                <input 
+                    type="password" 
+                    id="password1" 
+                    name="password1" 
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                    required 
+                    placeholder="รหัสผ่าน">
+                {% if form.password1.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.password1.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <label for="password2" class="block text-sm font-medium text-gray-700">{{ form.password2.label }}</label>
+                <input 
+                    type="password" 
+                    id="password2" 
+                    name="password2" 
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
+                    required 
+                    placeholder="ยืนยันรหัสผ่าน">
+                {% if form.password2.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.password2.errors }}</p>
+                {% endif %}
+            </div>
+            <button 
+                type="submit" 
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                สมัครสมาชิก
+            </button>
+        </form>
+
+        {% if messages %}
+        <ul class="mt-4 text-red-500">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

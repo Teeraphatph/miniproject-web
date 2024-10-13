@@ -1,0 +1,91 @@
+{% load compress %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+
+    <!-- โหลดฟอนต์ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="text/javascript">
+        var user = '{{ request.user }}';
+        function getToken(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken');
+    </script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef); /* เพิ่มสีพื้นหลังนุ่มนวล */
+            font-family: 'Montserrat', sans-serif; /* ฟอนต์หลัก */
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif; /* ฟอนต์สำหรับหัวข้อ */
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-white text-lg font-bold">
+                <a class="text-white hover:underline" href="/">M1er Music</a>
+            </div>
+            <form action="{% url 'search_product' %}" method="GET" class="flex space-x-2">
+                <input type="text" name="q" class="px-4 py-2 rounded" placeholder="ค้นหาสินค้า..." style="background-color: rgba(255, 255, 255, 0.8);">
+                <button type="submit" class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-200">ค้นหา</button>
+            </form>
+            <nav>
+                <ul class="flex space-x-6">
+                    {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                            <li><a class="text-white hover:underline" href="/backend">ภาพรวม</a></li>
+                            <li><a class="text-white hover:underline" href="/">รายการสินค้า</a></li>
+                            <li><a class="text-white hover:underline" href="/list_user">ข้อมูลผู้ใช้</a></li>
+                            <li><a class="text-white hover:underline" href="/product_admin">จัดการสินค้า</a></li>
+                            <li><a class="text-white hover:underline" href="/admin_order">คำสั่งซื้อ</a></li>
+                        {% else %}
+                            <li><a class="text-white hover:underline" href="/">หน้าแรก</a></li>
+                            <li><a class="text-white hover:underline" href="/update_profile">เปลี่ยนข้อมูลผู้ใช้</a></li>
+                            <li><a class="text-white hover:underline" href="/cart">ตะกร้าสินค้า</a></li>
+                        {% endif %}
+                        <li><a class="text-white hover:underline" href="/logout">Logout</a></li>
+                    {% else %}
+                        <li><a class="text-white hover:underline" href="/">หน้าแรก</a></li>
+                        <li><a class="text-white hover:underline" href="/login">LOGIN</a></li>
+                        <li><a class="text-white hover:underline" href="/register">REGISTER</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6">
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+</body>
+</html>

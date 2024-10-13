@@ -1,0 +1,49 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load humanize %} 
+
+{% block title %} Overview {% endblock %}
+
+{% block content %}
+<p class="text-lg font-bold">Overview</p>
+
+<p class="text-lg font-bold">ยอดขายรวม: ฿{{ total_revenue|intcomma }}</p>
+
+<canvas id="salesChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    const soldData = {{ sold_data|safe }};
+
+    const labels = Object.keys(soldData);
+    const data = Object.values(soldData).map(value => Math.floor(value));
+
+    const salesChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'ยอดขายสินค้า',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : null;  
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %} List User {% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10">
+    <h2 class="text-4xl font-bold mb-6 text-center">List of Users</h2>
+    
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead>
+                <tr class="bg-gray-800 text-white">
+                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Username</th>
+                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Full Name</th>
+                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Email</th>
+                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr class="hover:bg-gray-100">
+                    <td class="border-t px-4 py-3">{{ user.username }}</td>
+                    <td class="border-t px-4 py-3">{{ user.first_name }} {{ user.last_name }}</td>
+                    <td class="border-t px-4 py-3">{{ user.email }}</td>
+                    <td class="border-t px-4 py-3">
+                        {% if user.customer and user.customer.default_address %}
+                            {{ user.customer.default_address.address_line1 }}, {{ user.customer.default_address.city }}
+                        {% else %}
+                            ไม่มีที่อยู่
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="border-t px-4 py-3 text-center text-gray-600">No users found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

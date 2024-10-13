@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %} profile {% endblock %}
+
+{% block content %}
+
+<div class="flex justify-center items-center h-screen">
+    <div class="border-4 py-3 px-3 inline-block">
+        
+        <img style="width: 330px; height: auto;" src="{% static 'images/imgpro.jpg'%}">
+        <br><p class="font-Mitr text-2xl">นาย ธีระภัทร ภูเด่น</p>
+        <br><p class="font-Mitr">นักศึกษาคณะวิทยาศาสตร์ สาขาวิชาเทคโนโลยีสาร</p>
+        <p class="font-Mitr">สนเทศและการสื่อสาร มหาวิทยาลัยอุบลราชธานี</p>
+        <p class="font-Mitr">อยู่ปี 3 ชอบเล่นเกม Dota2 ถ้าไม่เล่นก็นอนนนน</p>
+        <br><div class="flex flex-row">
+        <img class="" style="width: 40px; height: auto;" src="{% static 'images/HTML5_logo_and_wordmark.svg.png'%}">
+        <img class="pl-3"style="width: 40px; height: auto;" src="{% static 'images/PHP-logo.svg.png'%}">
+        <img class="pl-3"style="width: 40px; height: auto;" src="{% static 'images/Python-logo-notext.svg.png'%}">
+        <img class="pl-3"style="width: 40px; height: auto;" src="{% static 'images/Adobe_Photoshop_CC_icon.svg.png'%}">
+        <img class="pl-3"style="width: 40px; height: auto;" src="{% static 'images/Database-mysql.svg.png'%}">
+        
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

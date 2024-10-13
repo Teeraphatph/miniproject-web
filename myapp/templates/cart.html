@@ -1,0 +1,63 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load humanize %} 
+{% block title %} ตะกร้าสินค้า {% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold text-center mb-6">ตะกร้าสินค้า</h1>
+    
+    {% if cart_items %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-700">
+                        <th class="py-3 px-6 border-b">ชื่อสินค้า</th>
+                        <th class="py-3 px-6 border-b">จำนวน</th>
+                        <th class="py-3 px-6 border-b">ราคา</th>
+                        <th class="py-3 px-6 border-b">ราคารวม</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr class="hover:bg-gray-100">
+                        <td class="py-4 px-6 border-b">{{ item.product.name }}</td>
+                        <td class="py-4 px-6 border-b">
+                            <div class="flex items-center">
+                                <p class="quantity mr-2">{{ item.quantity }}</p>
+                                <div class="flex space-x-2">
+                                    <a href="javascript:void(0);" data-product="{{ item.product.id }}" data-action="add" class="chg-quantity update-cart">
+                                        <img src="{% static 'images/arrow-up.png' %}" class="w-8 h-8 cursor-pointer hover:opacity-75" alt="เพิ่ม">
+                                    </a>
+                                    <a href="javascript:void(0);" data-product="{{ item.product.id }}" data-action="remove" class="chg-quantity update-cart">
+                                        <img src="{% static 'images/arrow-down.png' %}" class="w-8 h-8 cursor-pointer hover:opacity-75" alt="ลด">
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-4 px-6 border-b">{{ item.total_price|intcomma }}</td>
+                        <td class="py-4 px-6 border-b">{{ item.total_price|intcomma }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <h2 class="mt-4 text-xl font-semibold text-right">ยอดรวม: <span class="text-green-600">{{ total_amount|intcomma }}</span></h2>
+        
+        <div class="text-center mt-6">
+            <a href="{% url 'checkout' %}" class="bg-yellow-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-yellow-600 transition">
+                ชำระเงิน
+            </a>
+        </div>
+        
+    {% else %}
+        <p class="text-center text-gray-500">ตะกร้าของคุณว่างเปล่า</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,16 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10">
+    <h2 class="text-3xl font-bold">Confirm Delete</h2>
+    <p>Are you sure you want to delete {{ product.name }}?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 text-white px-4 py-2">Delete</button>
+    </form>
+    <a href="{% url 'product_admin' %}" class="text-blue-500">Cancel</a>
+</div>
+{% endblock %}
